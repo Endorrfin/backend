@@ -63,6 +63,65 @@ main();
 
 
 
+// ======= SPAWN AND EXEC =======
+
+
+// const { exec } = require('child_process');
+//
+// const childProcess = exec('ls', (err, stdout, stderr) => {
+//     if (err) {
+//         console.error(err.message);
+//     }
+//     console.log(`stdout: ${stdout}`);
+//     console.log(`stderr: ${stderr}`);
+// });
+//
+// childProcess.on('exit', (code) => {
+//     console.log(`Code of output ${code}`);
+// })
+
+
+
+// const {spawn} = require('child_process');
+//
+// const childProcess = spawn('ls');
+//
+// childProcess.stdout.on('data', (data) => {
+//     console.log(`Stdout: ${data}`);
+// })
+//
+// childProcess.stderr.on('data', (data) => {
+//     console.log(`Stderror: ${data}`);
+// })
+//
+// childProcess.on('exit', (code) => {
+//     console.log(`Code of output ${code}`);
+// })
+
+
+// ======= FORK =======
+
+const {fork} = require('child_process');
+
+const forkProcess = fork('fork.js');
+
+forkProcess.on('message', (msg) => {
+    console.log(`Received message: ${msg}`);
+});
+
+forkProcess.on('close', (code) => {
+    console.log(`Exited: ${code}`);
+});
+
+forkProcess.send('Ping');
+forkProcess.send('disconnect');
+
+
+
+
+
+
+
 
 
 
