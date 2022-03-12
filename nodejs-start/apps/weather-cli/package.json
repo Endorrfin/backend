@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://purpleschool.ru",
     "email": "lkirnadz@gmail.com"
+  },
+  "dependencies": {
+    "axios": "^0.26.1"
   }
 }
