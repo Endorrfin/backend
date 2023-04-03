@@ -1,0 +1,24 @@
+{
+  "name": "node-js",
+  "version": "1.0.0",
+  "description": "Basic concepts of Node.js",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "(git+https://github.com/Endorrfin/backend)"
+  },
+  "author": "KvN",
+  "license": "ISC",
+  "homepage": "git+https://github.com/Endorrfin/backend/node-js_basic-concepts#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2"
+  }
+}
