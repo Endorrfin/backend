@@ -37,3 +37,7 @@
     5.5.2 Writable - для запису данних
     5.5.3 Duplex - як для читання, так і для запису данних
     5.5.4 Transform - дуплексний потік, який перетворює вхідні дані
+
+
+    console command
+    ls -la - show files and their size
