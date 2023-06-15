@@ -1,6 +1,6 @@
 const path = require('path');
 
-const filePath = '/Users/vk/i-data/src/backend/node-js_full-course/section-12-module-path/index.js';
+const filePath = '/Users/vk/i-data/src/backend/node-js_full-course/section-12-module-path/app.js';
 const textFilePath = '/Users/vk/Desktop/temp/file.txt';
 const relativePath = './section-12-module-path/movie.mov';
 const directoryPath = './node-js_full-course/subfolder';
@@ -9,7 +9,7 @@ const directoryPath = './node-js_full-course/subfolder';
 console.log(path.isAbsolute(filePath)); // true
 console.log(path.isAbsolute(relativePath)); // false
 
-console.log(path.basename(filePath)); // index.js
+console.log(path.basename(filePath)); // app.js
 console.log(path.basename(directoryPath)); // subfolder
 
 console.log(path.dirname(filePath)); // /Users/vk/i-data/src/backend/node-js_full-course/section-12-module-path
