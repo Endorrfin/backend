@@ -1,4 +1,10 @@
 
+How to start app
+node app.js
+
+How to stop app
+CTRL + C
+
 
 NPM PACKAGES
 1. npm i --save-dev nodemon
