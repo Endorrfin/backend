@@ -1,0 +1,15 @@
+
+
+INSTALL
+sudo npm i nodemon --global
+
+
+RUN FILES / App
+
+every change rerun manually
+node .index.js
+
+every change rerun auto
+nodemon index.js
+
+npm run start
