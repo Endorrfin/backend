@@ -13,3 +13,5 @@ NPM PACKAGES
 4. npm i --save ejs
 5. npm i --save pug
 6. npm i --save express-handlebars
+7. npm i --save mysql2
+8. npm i --save sequelize
