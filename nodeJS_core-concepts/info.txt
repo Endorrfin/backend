@@ -1,0 +1,6 @@
+
+INSTALL
+1. VS Code - IDE
+2. NVM - for work with different npm versions
+3. Postman - for work with queries
+4. Wireshark - monitor network card / see how networking works
