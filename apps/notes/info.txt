@@ -1,0 +1,8 @@
+
+
+INSTALL
+npm init
+  - npm i validator@10.8.0
+  - npm i chalk@2.4.1
+  - npm i nodemon -v
+  - npm i yargs@12.0.2
