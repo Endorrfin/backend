@@ -1,0 +1,12 @@
+
+
+INSTALL
+  npm init -y   initialization package.json without questions
+  npm install express
+  npm install pg    for working with postgres
+  npm i -D nodemon  restart server after something change
+
+
+NPM COMMANDS:
+  npm start
+  npm run dev   server restart each time after save file
