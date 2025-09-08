@@ -1,0 +1,304 @@
+
+# docker-compose.yml - Production deployment configuration
+  version: '3.8'
+  services:
+    # API Gateway
+    api-gateway:
+      build:
+        context: ./services/api-gateway
+        dockerfile: Dockerfile
+      ports:
+        - "8080:8080"
+      environment:
+        - NODE_ENV=production
+        - JWT_SECRET=${JWT_SECRET}
+        - REDIS_URL=redis://redis:6379
+      depends_on:
+        - redis
+        - auth-service
+        - user-service
+        - qr-service
+      networks:
+        - app-network
+
+    # Auth Service
+    auth-service:
+      build:
+        context: ./services/auth-service
+        dockerfile: Dockerfile
+      environment:
+        - NODE_ENV=production
+        - DATABASE_URL=${AUTH_DB_URL}
+        - JWT_SECRET=${JWT_SECRET}
+        - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
+        - REDIS_URL=redis://redis:6379
+      depends_on:
+        - postgres-auth
+        - redis
+      networks:
+        - app-network
+
+
+    # User Service
+    user-service:
+      build:
+        context: ./services/user-service
+        dockerfile: Dockerfile
+      environment:
+        - NODE_ENV=production
+        - DATABASE_URL=${USER_DB_URL}
+        - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      depends_on:
+        - postgres-users
+      networks:
+        - app-network
+
+
+    # QR Service
+    qr-service:
+      build:
+        context: ./services/qr-service
+        dockerfile: Dockerfile
+      environment:
+        - NODE_ENV=production
+        - DATABASE_URL=${QR_DB_URL}
+        - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+        - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+        - AWS_S3_BUCKET=${AWS_S3_BUCKET}
+        - BASE_URL=${BASE_URL}
+      depends_on:
+        - postgres-qr
+      networks:
+        - app-network
+
+    # Payment Service
+    payment-service:
+      build:
+        context: ./services/payment-service
+        dockerfile: Dockerfile
+      environment:
+        - NODE_ENV=production
+        - DATABASE_URL=${PAYMENT_DB_URL}
+        - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+        - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}
+      depends_on:
+        - postgres-payments
+      networks:
+        - app-network
+
+
+    # Order Service
+    order-service:
+      build:
+        context: ./services/order-service
+        dockerfile: Dockerfile
+      environment:
+        - NODE_ENV=production
+        - DATABASE_URL=${ORDER_DB_URL}
+        - PRINTING_SERVICE_API_KEY=${PRINTING_SERVICE_API_KEY}
+      depends_on:
+        - postgres-orders
+      networks:
+        - app-network
+
+
+    # Databases
+    postgres-auth:
+      image: postgres:15-alpine
+      environment:
+        POSTGRES_DB: qr_auth
+        POSTGRES_USER: ${DB_USER}
+        POSTGRES_PASSWORD: ${DB_PASSWORD}
+      volumes:
+        - postgres_auth_data:/var/lib/postgresql/data
+      networks:
+        - app-network
+
+    postgres-users:
+      image: postgres:15-alpine
+      environment:
+        POSTGRES_DB: qr_users
+        POSTGRES_USER: ${DB_USER}
+        POSTGRES_PASSWORD: ${DB_PASSWORD}
+      volumes:
+        - postgres_users_data:/var/lib/postgresql/data
+      networks:
+        - app-network
+
+    postgres-qr:
+      image: postgres:15-alpine
+      environment:
+        POSTGRES_DB: qr_codes
+        POSTGRES_USER: ${DB_USER}
+        POSTGRES_PASSWORD: ${DB_PASSWORD}
+      volumes:
+        - postgres_qr_data:/var/lib/postgresql/data
+      networks:
+        - app-network
+
+
+    postgres-payments:
+      image: postgres:15-alpine
+      environment:
+        POSTGRES_DB: qr_payments
+        POSTGRES_USER: ${DB_USER}
+        POSTGRES_PASSWORD: ${DB_PASSWORD}
+      volumes:
+        - postgres_payments_data:/var/lib/postgresql/data
+      networks:
+        - app-network
+
+    postgres-orders:
+      image: postgres:15-alpine
+      environment:
+        POSTGRES_DB: qr_orders
+        POSTGRES_USER: ${DB_USER}
+        POSTGRES_PASSWORD: ${DB_PASSWORD}
+      volumes:
+        - postgres_orders_data:/var/lib/postgresql/data
+      networks:
+        - app-network
+
+    # Redis for caching and session storage
+    redis:
+      image: redis:7-alpine
+      command: redis-server --appendonly yes
+      volumes:
+        - redis_data:/data
+      networks:
+        - app-network
+
+
+    # Nginx Load Balancer
+    nginx:
+      image: nginx:alpine
+      ports:
+        - "80:80"
+        - "443:443"
+      volumes:
+        - ./nginx.conf:/etc/nginx/nginx.conf
+        - ./ssl:/etc/nginx/ssl
+      depends_on:
+        - api-gateway
+      networks:
+        - app-network
+
+  volumes:
+    postgres_auth_data:
+    postgres_users_data:
+    postgres_qr_data:
+    postgres_payments_data:
+    postgres_orders_data:
+    redis_data:
+
+  networks:
+    app-network:
+      driver: bridge
+
+
+# Dockerfile template for services
+# services/qr-service/Dockerfile
+FROM node:22-alpine
+
+WORKDIR /app
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci --only=production && npm cache clean --force
+
+# Copy source code
+COPY src/ ./src/
+COPY .env ./
+
+# Create non-root user
+RUN addgroup -g 1001 -S nodejs && \
+adduser -S qrservice -u 1001
+
+# Change ownership of the app directory
+RUN chown -R qrservice:nodejs /app
+USER qrservice
+
+# Expose port
+EXPOSE 8080
+  
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+CMD node healthcheck.js
+
+CMD ["node", "src/app.js"]
+
+# Database migration file example
+# shared/database/migrations/001-create-qr-codes.js
+'use strict';
+  
+  
+#module.exports = {
+#  async up(queryInterface, Sequelize) {
+#    await queryInterface.createTable('qr_codes', {
+#      id: {
+#        type: Sequelize.UUID,
+#        defaultValue: Sequelize.UUIDV4,
+#        primaryKey: true
+#      },
+#      user_id: {
+#        type: Sequelize.UUID,
+#        allowNull: false,
+#        references: {
+#          model: 'users',
+#          key: 'id'
+#        },
+#        onDelete: 'CASCADE'
+#      },
+#      name: {
+#        type: Sequelize.STRING(255),
+#        allowNull: false
+#      },
+#      qr_data: {
+#        type: Sequelize.TEXT,
+#        allowNull: false
+#      },
+#      qr_image_url: {
+#        type: Sequelize.STRING(500),
+#        allowNull: true
+#      },
+#      destination_url: {
+#        type: Sequelize.STRING(2048),
+#        allowNull: true
+#      },
+#      is_active: {
+#        type: Sequelize.BOOLEAN,
+#        defaultValue: true
+#      },
+#      scan_count: {
+#        type: Sequelize.INTEGER,
+#        defaultValue: 0
+#      },
+#      created_at: {
+#        type: Sequelize.DATE,
+#        defaultValue: Sequelize.NOW
+#      },
+#      updated_at: {
+#        type: Sequelize.DATE,
+#        defaultValue: Sequelize.NOW
+#      }
+#    });
+#
+#    // Add indexes for performance
+#    await queryInterface.addIndex('qr_codes', ['user_id']);
+#    await queryInterface.addIndex('qr_codes', ['is_active']);
+#    await queryInterface.addIndex('qr_codes', ['created_at']);
+#  },
+#
+#  async down(queryInterface, Sequelize) {
+#    await queryInterface.dropTable('qr_codes');
+#  }
+#};
+
+
+
+
+
+
+

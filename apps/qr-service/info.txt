@@ -1,0 +1,382 @@
+
+
+
+⬛️ FILE STRUCTURE SERVER
+web-service/
+|__src/
+|	|
+|	|── services/
+|	|	|
+|	|	|── auth.service.js
+|	|	|── user.service.js
+|	|	|── jwt.service.js
+|	|	|── payment.service.js
+|	|	|── stripe.service.js
+|	|	|── subscription.service.js
+|	|	|── qr.service.js
+|	|	|── ...
+|	|
+|	|── controllers/
+|	|	|
+|	|	|── auth.controller.js
+|	|	|── user.controller.js
+|	|
+|	|── routes/
+|	|	|
+|	|	|── auth.routes.js
+|	|	|── user.routes.js
+|	|	|── payment.routes.js
+|	|	|── subscription.routes.js
+|	|	|── webhook.routes.js
+|	|	|── qr.routes.js
+|	|	|── ...
+|	|
+|	|── middleware/
+|	|	|
+|	|	|── auth.middleware.js
+|	|	|── validation.middleware.js
+|	|
+|	|── models/
+|	|	|
+|	|	|── refresh-token.models.js
+|	|	|── user.model.js
+|	|	|── credit.model.js
+|	|	|── invoice.model.js
+|	|	|── plan.model.js
+|	|	|── subscription.model.js
+|	|	|── qr-code.model.js
+|	|	|── ...
+|	|
+|── shared/
+|	|
+|	|── constants/
+|	|	|── user-roles.js
+|	|
+|	|── database/
+|	|	|── migration/
+|	|	|── config.js
+|	|
+|	|── utils/
+|	|	|── logger.js
+|	|	|── response.js
+|	|	|── validator.js
+|	|	|── ...
+|	|
+|── tests/
+|	|	|── auth.test.js
+|	|	|── setup.js
+|	|	|── ...
+|	|
+|	|── app.js
+|	|── package.json
+|	|── .prettierrc
+|	|── README.md
+|
+|── .env
+|── .sequelizerc
+|── .gitignore
+|── package.json
+|── eslint.config.js
+|── ui
+
+
+
+⬜️ FILE STRUCTURE UI
+ui/
+|__src/
+|	|
+|	|── service/
+|	|	|
+|	|	|── auth.service.js
+|	|	|── subscription.service.js
+|	|	|── api.js
+|	|	|── ...
+|	|
+|	|── components/
+|	|	|
+|	|	|── Layout
+|	|	|	|
+|	|	|	|── Header.js
+|	|	|	|── Layout.js
+|	|	|	|──
+|	|	|
+|	|	|── PrivateRoute.js
+|	|	|── LoadingSpinner.js
+|	|	|── ...
+|	|
+|	|── contexts/
+|	|	|
+|	|	|── AuthContext.js
+|	|
+|	|── pages/
+|	|	|
+|	|	|── Register.js
+|	|	|── Login.js
+|	|	|── Dashboard.js
+|	|	|── Profile.js
+|	|	|── Pricing.js
+|	|	|── Subscription.js
+|	|	|── SubscriptionSuccess.js
+|	|	|── ...
+|	|
+|	|── utils/
+|	|	|
+|	|	|── constants.js
+|	|
+|	|── App.js
+|	|── index.js
+|	|── index.css
+|
+|── .env
+|── package.json
+
+
+
+
+🟣 NPM PACKAGES:
+  🔹dependencies:
+    1. npm install express
+    2. npm i express-validator
+    3. npm i express-rate-limit
+    4. npm i pg
+    5. npm i uuid
+    6. npm i qrcode
+    7. npm i sequelize
+    8. npm i hamlet
+    9. npm i cors
+    10. npm i compression
+    11. npm i morgan
+    12. npm i winston
+    13. npm i dotenv
+    14. npm i joi
+    15. npm i sharp
+    16. npm i aws-sdk
+    17. npm i multer
+    18. npm i jsonwebtoken
+    19. npm i @eslint/js
+    20. npm i pg-hstore
+    21. npm i stripe@14.25.0
+
+  🔸devDependencies:
+    1. npm install nodemon --save-dev
+    2. npm install eslint --save-dev
+    3. npm install jest --save-dev
+    4. npm install sequelize-cli --save-dev
+    5. npm install supertest --save-dev
+
+
+
+🟢 RUN APP
+  1. npm start    # Production mode
+  2. npm run dev  # Development mode
+
+
+💽 DB PostgreSQL
+Міграції - це файли, які створюють таблиці та поля в базі данних
+Database		webservice_db
+User		    endorr
+
+
+brew install postgresql            🟢install postgresql
+brew uninstall postgresql          🔴uninstall postgresql
+
+initdb -D /opt/homebrew/var/postgres  initialize data base
+psql --version                     ⚪️check version
+brew services start postgresql     🟣run service
+brew services stop postgresql      🟠stop service
+brew services list                  show if service start
+
+psql postgres                       enter inside postgreSQL
+  \list                             show list of data base
+  \du                               show list of roles
+  \q                                quit for inside  data base
+
+
+echo "JWT_SECRET=$(node -e 'console.log(require("crypto").randomBytes(32).toString("hex"))')"
+echo "JWT_REFRESH_SECRET=$(node -e 'console.log(require("crypto").randomBytes(32).toString("hex"))')"
+
+
+INTEGRATION STRIPE
+💰💵 STRIPE
+API keys
+Publishable key: pk_test_51S3nleH5p7EUmVB1TLvgDbVf6eOLKNvOA4hSCod0VXu5N0vOEvdAF4fJU5lQlUYr9dJfy4krUEzedh97hMYmlDED00jLY0Fuwc
+Secret key: sk_test_51S3nleH5p7EUmVB1RCCa2wfCxVxo3G2onvUmZVyssEfcVtd6NE4epS4fa8Gn6jQSpjOuMzjPwUdHOSXBt1RBq4Yx00HjT2AXPR
+Test cards: 4242424242424242
+
+# Install Stripe CLI on macbook for testing webhooks locally
+brew install stripe/stripe-cli/stripe
+
+(base) vk stripe login
+Your pairing code is: scenic-fair-nicely-mercy
+This pairing code verifies your authentication with Stripe.
+Press Enter to open the browser or visit https://dashboard.stripe.com/stripecli/confirm_auth?t=xD4DpGoHSl8Dk9B1zuBP28RwU6HBKanm (^C to quit)
+
+Stripe CLI to access your account information?
+roomy-easier-snappy-work
+
+⚠️ Important Notes:
+Stripe Dashboard: Create your products and prices in Stripe first
+Test Mode: Use Stripe test mode for development
+Webhooks: Essential for syncing subscription status
+Credits: Applied to customer's Stripe balance for next invoice
+Downgrade Timing: Takes effect at period end to avoid complexity
+
+The system now handles all the complex scenarios you specified, including mid-cycle proration, usage validation, and proper credit calculations!
+
+ 🌐 STRIPE DASHBOARD
+ https://dashboard.stripe.com/test/dashboard
+
+
+
+I use this structure because it separates concerns, makes the codebase maintainable, and follows Node.js best practices.
+Controllers handle HTTP logic, services contain business logic, and models define data structure.
+
+
+🟦 Database Design & Management
+
+-- Users table
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  password_hash VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Web pages table
+CREATE TABLE web_pages (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users(id),
+  title VARCHAR(255) NOT NULL,
+  content JSONB, -- Flexible content storage
+  template_id INTEGER,
+  is_published BOOLEAN DEFAULT false,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- QR codes table
+CREATE TABLE qr_codes (
+  id SERIAL PRIMARY KEY,
+  web_page_id INTEGER REFERENCES web_pages(id),
+  qr_data TEXT NOT NULL,
+  qr_image_url VARCHAR(255),
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Orders table
+CREATE TABLE orders (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users(id),
+  qr_code_id INTEGER REFERENCES qr_codes(id),
+  quantity INTEGER NOT NULL,
+  total_price DECIMAL(10,2),
+  status VARCHAR(50) DEFAULT 'pending',
+  shipping_address JSONB,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+
+
+
+🟫 RESTful API Design
+
+// Web Pages API
+GET    /api/v1/pages           // List user's web pages
+POST   /api/v1/pages           // Create new web page
+GET    /api/v1/pages/:id       // Get specific web page
+PUT    /api/v1/pages/:id       // Update web page
+DELETE /api/v1/pages/:id       // Delete web page
+POST   /api/v1/pages/:id/publish // Publish web page
+
+// QR Codes API
+POST   /api/v1/qr-codes        // Generate QR code for web page
+GET    /api/v1/qr-codes/:id    // Get QR code details
+PUT    /api/v1/qr-codes/:id    // Update QR code settings
+
+// Orders API
+POST   /api/v1/orders          // Create new order
+GET    /api/v1/orders          // List user's orders
+GET    /api/v1/orders/:id      // Get order details
+PUT    /api/v1/orders/:id      // Update order status
+
+
+
+Platform Architecture:
+
+
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   User Service  │    │   Page Service  │    │   QR Service    │
+│                 │    │                 │    │                 │
+│ - Authentication│    │ - Page CRUD     │    │ - QR Generation │
+│ - User profiles │    │ - Templates     │    │ - Customization │
+│ - Permissions   │    │ - Publishing    │    │ - Analytics     │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                       │                       │
+         └───────────────────────┼───────────────────────┘
+                                 │
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│  Order Service  │    │   API Gateway   │    │  File Service   │
+│                 │    │                 │    │                 │
+│ - Order mgmt    │    │ - Route traffic │    │ - File uploads  │
+│ - Payment proc  │    │ - Rate limiting │    │ - Image process │
+│ - Fulfillment   │    │ - Auth validation│   │ - CDN delivery  │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+
+
+Microservices Architecture Design
+
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   API Gateway   │    │  Load Balancer  │    │  Message Queue  │
+│   (Express.js)  │    │     (Nginx)     │    │    (Redis)      │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                       │                       │
+         └───────────────────────┼───────────────────────┘
+                                 │
+    ┌────────────────────────────┼────────────────────────────┐
+    │                            │                            │
+┌───▼────┐  ┌────────┐  ┌───────▼──┐  ┌─────────┐  ┌────────┐
+│ Auth   │  │  User  │  │    QR    │  │ Payment │  │ Order  │
+│Service │  │Service │  │ Service  │  │ Service │  │Service │
+└────────┘  └────────┘  └──────────┘  └─────────┘  └────────┘
+     │           │           │            │            │
+┌────▼────┐ ┌───▼────┐ ┌────▼─────┐ ┌───▼─────┐ ┌───▼────┐
+│PostgreSQL│ │PostgreSQL│ │PostgreSQL│ │PostgreSQL│ │PostgreSQL│
+│   Auth   │ │  Users  │ │    QR    │ │ Payments│ │ Orders │
+└─────────┘ └────────┘ └──────────┘ └─────────┘ └────────┘
+
+
+SCOPE
+1. create the database configuration file.
+2. create the user roles constants file.
+3. create the logger utility.
+4. create the response utility for standardized API responses.
+5. create the validator utility using Joi for input validation.
+6. create the User model using Sequelize.
+7. create the RefreshToken model.
+8. create the JWT service for token management.
+9. create the User service.
+10. create the Auth service.
+11. create the validation middleware.
+12. create the authentication middleware.
+11. create the Auth controller.
+12. create the User controller.
+13. create the Auth routes.
+14. create the User routes.
+15. create a file service placeholder and the main app.js file.
+16. create the main application entry point (app.js).
+17. create a database migration file and setup instructions.
+18. create an ESLint configuration file that follows best practices.
+19. create a basic test file to demonstrate the testing setup.
+20. create a comprehensive README with setup instructions.
+21. create one final file - a Jest configuration for better test setup.
+
+
+
+
+
+
+
+
+
+
+
