@@ -135,7 +135,7 @@ web-service/
 |	|	|── setup.js
 |	|	|── ...
 |	|
-|	|── app.js
+|	|── index.js
 |	|── package.json
 |	|── .prettierrc
 |	|── README.md

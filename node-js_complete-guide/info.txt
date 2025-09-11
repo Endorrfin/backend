@@ -1,6 +1,6 @@
 
 How to start app
-node app.js
+node index.js
 
 How to stop app
 CTRL + C
