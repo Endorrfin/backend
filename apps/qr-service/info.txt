@@ -67,7 +67,7 @@ web-service/
 |	|	|── setup.js
 |	|	|── ...
 |	|
-|	|── app.js
+|	|── index.js
 |	|── package.json
 |	|── .prettierrc
 |	|── README.md
@@ -362,8 +362,8 @@ SCOPE
 12. create the User controller.
 13. create the Auth routes.
 14. create the User routes.
-15. create a file service placeholder and the main app.js file.
-16. create the main application entry point (app.js).
+15. create a file service placeholder and the main index.js file.
+16. create the main application entry point (index.js).
 17. create a database migration file and setup instructions.
 18. create an ESLint configuration file that follows best practices.
 19. create a basic test file to demonstrate the testing setup.
