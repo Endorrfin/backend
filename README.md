@@ -1,12 +1,12 @@
 # nodeJS
 
-
 ## CONTENT
 ### 🔺 `APPS`
 ___
-[**1️⃣**: Posts](https://github.com/Endorrfin/backend/tree/main/apps/posts) <br/>
+[**1️⃣**: Posts app (simple)](https://github.com/Endorrfin/backend/tree/main/apps/posts) <br/>
 [**2️⃣**: Notes](https://github.com/Endorrfin/backend/tree/main/apps/notes) <br/>
 [**3️⃣**: qr-service](https://github.com/Endorrfin/backend/tree/main/apps/qr-service) <br/>
+[**3️⃣**: posts service app](https://github.com/Endorrfin/backend/tree/main/apps/posts-service) <br/>
 [**3️⃣**: Task manager](https://github.com/Endorrfin/backend/tree/main/apps/task-manager) <br/>
 
 

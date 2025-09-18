@@ -111,25 +111,4 @@ if (process.env.NODE_ENV !== 'test') {
   startServer();
 }
 
-
 module.exports = app;
-
-
-
-
-
-
-
-
-// const express = require('express');
-//
-// // const PORT = process.env.PORT || 8080;
-// const PORT = process.env.PORT || 3000;
-//
-// const app = express(); // create server
-//
-// app.get('/', (req, res) => {
-//   res.send('♻️ START WEB SERVICE! I am using NodeJS, Postgres & QR-Code‼️');
-// })
-//
-// app.listen(PORT, () => console.log(`🟩🌟 Server started and listening on port ${PORT}`));
