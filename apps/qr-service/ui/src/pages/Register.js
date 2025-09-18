@@ -26,7 +26,7 @@ const Register = () => {
       <div className="auth-container">
         <div className="auth-card">
           <div className="auth-header">
-            <h2>Create Account</h2>
+            <h2>Create Account QR Service</h2>
             <p>Get started with your free account</p>
           </div>
 

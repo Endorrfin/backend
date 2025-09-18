@@ -22,7 +22,7 @@ const Login = () => {
       <div className="auth-container">
         <div className="auth-card">
           <div className="auth-header">
-            <h2>Welcome Back</h2>
+            <h2>Welcome Back QR Service</h2>
             <p>Enter your credentials to access your account</p>
           </div>
 
