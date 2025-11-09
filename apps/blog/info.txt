@@ -1,0 +1,17 @@
+
+
+⚫️ NODE.JS APP
+NPM PACKAGES
+npm init -y
+npm install express cors axios nodemon
+npm install cors
+
+
+⚪️ REACTJS APP
+npx create-react-app client
+
+NPM PACKAGES
+npm i axios
+
+
+
