@@ -1,0 +1,19 @@
+
+🟡 NPM packages
+  npm i nodemon@3.1.11
+  npm install mongodb
+  npm i redis
+
+
+⚪️ redis
+  brew --version
+  brew install redis
+  brew services start redis
+  redis-cli ping
+
+  backend/node-js_advanced-concepts/AdvancedNode
+  node
+  const redis = require('redis')
+  const redisUrl = 'redis://127.0.0.1:6379'
+  const client = redis.createClient(redisUrl)
+  client
