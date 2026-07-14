@@ -17,3 +17,13 @@
   const redisUrl = 'redis://127.0.0.1:6379'
   const client = redis.createClient(redisUrl)
   client
+
+
+🟢 server
+cd node-js_advanced-concepts/AdvancedNode
+npm run start
+
+
+🔵 ui
+cd node-js_advanced-concepts/AdvancedNode/client
+npm run start
